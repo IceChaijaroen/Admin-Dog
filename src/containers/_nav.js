@@ -149,8 +149,14 @@ const _nav =  [
   */
   {
     _tag: 'CSidebarNavItem',
-    name: 'จัดการหน้าข่าวสาร',
+    name: 'จัดการข้อมูลสายพันธุ์สุนัข',
     to: '/charts',
+    icon: 'cil-chart-pie'
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'จัดการท่าฝึกสุนัข',
+    to: '/dogtrain',
     icon: 'cil-chart-pie'
   },
   /*

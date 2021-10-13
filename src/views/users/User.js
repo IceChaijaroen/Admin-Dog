@@ -36,21 +36,26 @@ const User = ({ match }) => {
   }, [])
 
 
-  function Submit(e) {
-    e.preventDefault();
-    axios.post('http://35.187.253.40/admin/update.php', {
-      iduser: parseInt(match.params.id),
+  function Submit() {
+    const article = {
+      iduser: match.params.id,
       username: username,
       email: email,
       password: password,
       name: name,
       lastname: lastname,
       img: img
-    })
+    };
+    axios.post('http://35.187.253.40/admin/update.php', article)
       .then(res => {
         alert(res.data);
       })
+      .catch(err => {
+        alert(err);
+      })
   }
+
+  console.log(iduser, username, email, password, name, lastname)
 
 
   const uploadImage = async (e) => {

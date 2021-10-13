@@ -18,23 +18,23 @@ import axios from 'axios'
 
 
 
-const Charts = () => {
+const Dogtrain = () => {
   const [details, setDetails] = useState([])
-  const [doginfo, setDoginfo] = useState([])
+  const [dogtrain, setDogtrain] = useState([])
   const [submit, setSubmit] = useState(false)
   const [iduser, setUserid] = useState()
   const history = useHistory()
 
 
   useEffect(() => {
-    axios.get('http://35.187.253.40/admin/doginfo.php')
+    axios.get('http://35.187.253.40/admin/dogtrain.php')
       .then(res => {
-        setDoginfo(res.data);
+        setDogtrain(res.data);
       })
       .catch(err => {
         alert(err)
       })
-  }, [doginfo])
+  }, [dogtrain])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,14 +65,13 @@ const Charts = () => {
 
 
   const fields = [
-    { key: 'iddoginfo', _style: { width: '1%' } },
-    { key: 'dogname', _style: { width: '20%' } },
-    { key: 'origin', _style: { width: '20%' } },
-    { key: 'typeuse', _style: { width: '20%' } },
+    { key: 'idtrain', _style: { width: '5%' } },
+    { key: 'trainname', _style: { width: '20%' } },
+    { key: 'trainlevel', _style: { width: '10%' } },
     {
       key: 'show_details',
       label: '',
-      _style: { width: '5%' },
+      _style: { width: '2%' },
       sorter: false,
       filter: false
     }
@@ -81,7 +80,7 @@ const Charts = () => {
 
   return (
     <CDataTable
-      items={doginfo}
+      items={dogtrain}
       fields={fields}
       columnFilter
       tableFilter
@@ -113,19 +112,19 @@ const Charts = () => {
             return (
               <CCollapse show={details.includes(index)}>
                 <CCardBody>
-                  <h4>สายพันธุ์ : {item.dogname}</h4>
-                  {item.imgcut == null || item.imgcut == "" ? (
+                  <h4>ชื่อท่าฝึก : {item.trainname}</h4>
+                  {item.trainimg == null || item.trainimg == "" ? (
                     <>
                       <h4>ยังไม่มีรูปภาพ</h4>
                     </>
                   ) : (
                     <>
-                      <h4><img src={item.imgcut} width="120" height="120" /></h4>
+                      <h4><img src={item.trainimg} width="120" height="120" /></h4>
                     </>
                   )}
 
 
-                  <CButton size="sm" color="warning" onClick={() => history.push(`/charts/${item.iddoginfo}`)}>
+                  <CButton size="sm" color="warning" onClick={() => history.push(`/dogtrain/${item.idtrain}`)}>
                     Edit
                   </CButton>
                   <CButton size="sm" color="danger" className="ml-1" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setUserid(item.iddoginfo) }}>
@@ -140,4 +139,4 @@ const Charts = () => {
   )
 }
 
-export default Charts
+export default Dogtrain

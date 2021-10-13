@@ -24,13 +24,7 @@ const Users = () => {
   const [submit, setSubmit] = useState(false)
   const [iduser, setUserid] = useState()
   const history = useHistory()
-  const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
-  const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
-  const [page, setPage] = useState(currentPage)
 
-  const pageChange = newPage => {
-    currentPage !== newPage && history.push(`/users?page=${newPage}`)
-  }
 
   useEffect(() => {
     axios.get('http://35.187.253.40/admin/user.php')
@@ -71,28 +65,19 @@ const Users = () => {
 
 
   const fields = [
-    { key: 'name', _style: { width: '40%' } },
-    'registered',
+    { key: 'iduser', _style: { width: '1%' } },
     { key: 'email', _style: { width: '20%' } },
-    { key: 'status', _style: { width: '20%' } },
+    { key: 'name', _style: { width: '20%' } },
+    { key: 'lastname', _style: { width: '20%' } },
     {
       key: 'show_details',
       label: '',
-      _style: { width: '1%' },
+      _style: { width: '10%' },
       sorter: false,
       filter: false
     }
   ]
 
-  const getBadge = (status) => {
-    switch (status) {
-      case 'Active': return 'success'
-      case 'Inactive': return 'secondary'
-      case 'Pending': return 'warning'
-      case 'Banned': return 'danger'
-      default: return 'primary'
-    }
-  }
 
   return (
     <CDataTable
@@ -107,14 +92,6 @@ const Users = () => {
       sorter
       pagination
       scopedSlots={{
-        'status':
-          (item) => (
-            <td>
-              <CBadge color={getBadge(item.status)}>
-                {item.status}
-              </CBadge>
-            </td>
-          ),
         'show_details':
           (item, index) => {
             return (
@@ -126,7 +103,7 @@ const Users = () => {
                   size="sm"
                   onClick={() => { toggleDetails(index) }}
                 >
-                  {details.includes(index) ? 'Hide' : 'Show'}
+                  {details.includes(index) ? 'ซ่อน' : 'จัดการข้อมูล'}
                 </CButton>
               </td>
             )
@@ -136,11 +113,21 @@ const Users = () => {
             return (
               <CCollapse show={details.includes(index)}>
                 <CCardBody>
-                  <h4>
-                    {item.name}
-                  </h4>
-                  <CButton size="sm" color="info" onClick={() => history.push(`/users/${item.iduser}`)}>
-                    User Settings
+                  <h4>email : {item.email}</h4>
+                  <h4>password : {item.password}</h4>
+                  {item.img == null || item.img == "" ? (
+                    <>
+                      <h4>ยังไม่มีรูปภาพ</h4>
+                    </>
+                  ) : (
+                    <>
+                      <h4><img src={item.img} width="120" height="100" /></h4>
+                    </>
+                  )}
+
+
+                  <CButton size="sm" color="warning" onClick={() => history.push(`/users/${item.iduser}`)}>
+                    Edit
                   </CButton>
                   <CButton size="sm" color="danger" className="ml-1" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setUserid(item.iduser) }}>
                     Delete

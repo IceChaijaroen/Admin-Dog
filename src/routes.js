@@ -25,6 +25,7 @@ const ButtonDropdowns = React.lazy(() => import('./views/buttons/button-dropdown
 const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'));
 const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'));
 const Charts = React.lazy(() => import('./views/charts/Charts'));
+const ChartsDetail = React.lazy(() => import('./views/charts/ChartsDetail'));
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
 const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'));
 const Flags = React.lazy(() => import('./views/icons/flags/Flags'));
@@ -37,7 +38,9 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'));
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
-
+const dogtrain = React.lazy(() => import('./views/dogtrain/dogtrain'));
+const dogtrainDetail = React.lazy(() => import('./views/dogtrain/dogtrainDetail'));
+const Dogtraineditstep = React.lazy(() => import('./views/dogtrain/dogtraineditstep'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -67,7 +70,8 @@ const routes = [
   { path: '/buttons/button-dropdowns', name: 'Dropdowns', component: ButtonDropdowns },
   { path: '/buttons/button-groups', name: 'Button Groups', component: ButtonGroups },
   { path: '/buttons/brand-buttons', name: 'Brand Buttons', component: BrandButtons },
-  { path: '/charts', name: 'Charts', component: Charts },
+  { path: '/charts', exact: true, name: 'Dog information', component: Charts },
+  { path: '/charts/:id', exact: true, name: 'Dog information Detail', component: ChartsDetail },
   { path: '/icons', exact: true, name: 'Icons', component: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', component: CoreUIIcons },
   { path: '/icons/flags', name: 'Flags', component: Flags },
@@ -78,8 +82,11 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/widgets', name: 'Widgets', component: Widgets },
-  { path: '/users', exact: true,  name: 'Users', component: Users },
-  { path: '/users/:id', exact: true, name: 'User Details', component: User }
+  { path: '/users', exact: true, name: 'Users', component: Users },
+  { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/dogtrain', exact: true, name: 'Dogtrain', component: dogtrain },
+  { path: '/dogtrain/:id', exact: true, name: 'Dogtrain Details', component: dogtrainDetail },
+  { path: '/dogtrain/:id/:id', exact: true, name: 'Edit Step Dogtrain', component: Dogtraineditstep }
 ];
 
 export default routes;
