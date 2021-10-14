@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
+import { CCard, CCardBody, CCardHeader, CCol, CRow, CButton } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import axios from 'axios'
+import { useHistory, useLocation } from 'react-router-dom'
 
 
 const User = ({ match }) => {
@@ -14,6 +15,7 @@ const User = ({ match }) => {
   const [lastname, setLastname] = useState();
   const [img, setImg] = useState();
   const [submit, setSubmit] = useState(false)
+  const history = useHistory()
 
   useEffect(() => {
     axios.get('http://35.187.253.40/admin/showedituser.php', {
@@ -93,7 +95,7 @@ const User = ({ match }) => {
             User id: {match.params.id}
           </CCardHeader>
           <CCardBody>
-            <form onSubmit={(e) => Submit(e)}>
+            <form >
               <table className="table table-striped table-hover">
 
                 <tbody>
@@ -107,7 +109,7 @@ const User = ({ match }) => {
                               return (
                                 <>
                                   <td>
-                                    <img src={img} />
+                                    <img src={img} width="500" />
                                     <input type="file" onChange={(e) => uploadImage(e)} />
                                   </td>
                                 </>
@@ -142,8 +144,16 @@ const User = ({ match }) => {
                       )
                     })
                   }
+                  <tr>
+                    <td align="center" colSpan="2">
+                    <CButton color="warning" onClick={() => history.push(`/users`)}> ย้อนกลับ </CButton>
+                      &nbsp;&nbsp;&nbsp;
+                      <CButton color="success" onClick={(e) => Submit(e)}> ยืนยัน </CButton>
+
+                    </td>
+
+                  </tr>
                 </tbody>
-                <button > ยืนยัน </button>
               </table>
             </form>
           </CCardBody>

@@ -12,6 +12,7 @@ import {
   CButton,
   CCollapse
 } from '@coreui/react'
+import { CIcon } from '@coreui/icons-react';
 
 
 import axios from 'axios'
@@ -80,64 +81,75 @@ const Users = () => {
 
 
   return (
-    <CDataTable
-      items={userinfo}
-      fields={fields}
-      columnFilter
-      tableFilter
-      footer
-      itemsPerPageSelect
-      itemsPerPage={5}
-      hover
-      sorter
-      pagination
-      scopedSlots={{
-        'show_details':
-          (item, index) => {
-            return (
-              <td className="py-2">
-                <CButton
-                  color="primary"
-                  variant="outline"
-                  shape="square"
-                  size="sm"
-                  onClick={() => { toggleDetails(index) }}
-                >
-                  {details.includes(index) ? 'ซ่อน' : 'จัดการข้อมูล'}
-                </CButton>
-              </td>
-            )
-          },
-        'details':
-          (item, index) => {
-            return (
-              <CCollapse show={details.includes(index)}>
-                <CCardBody>
-                  <h4>email : {item.email}</h4>
-                  <h4>password : {item.password}</h4>
-                  {item.img == null || item.img == "" ? (
-                    <>
-                      <h4>ยังไม่มีรูปภาพ</h4>
-                    </>
-                  ) : (
-                    <>
-                      <h4><img src={item.img} width="120" height="100" /></h4>
-                    </>
-                  )}
+    <>
+      <CCol align="right" lg={12}>
+        <table height="30">
+          <tr>
+            <td text-align="center" >
+              <CButton color="success" onClick={() => history.push(`/users/insert`)}> เพิ่มข้อมูลผู้ใช้</CButton>
+            </td>
+          </tr>
+        </table>
+      </CCol>
+      <CDataTable
+        items={userinfo}
+        fields={fields}
+        columnFilter
+        tableFilter
+        footer
+        itemsPerPageSelect
+        itemsPerPage={5}
+        hover
+        sorter
+        pagination
+        scopedSlots={{
+          'show_details':
+            (item, index) => {
+              return (
+                <td className="py-2">
+                  <CButton
+                    color="primary"
+                    variant="outline"
+                    shape="square"
+                    size="sm"
+                    onClick={() => { toggleDetails(index) }}
+                  >
+                    {details.includes(index) ? 'ซ่อน' : 'จัดการข้อมูล'}
+                  </CButton>
+                </td>
+              )
+            },
+          'details':
+            (item, index) => {
+              return (
+                <CCollapse show={details.includes(index)}>
+                  <CCardBody>
+                    <h4>email : {item.email}</h4>
+                    <h4>password : {item.password}</h4>
+                    {item.img == null || item.img == "" ? (
+                      <>
+                        <h4>ยังไม่มีรูปภาพ</h4>
+                      </>
+                    ) : (
+                      <>
+                        <h4><img src={item.img} width="120" height="100" /></h4>
+                      </>
+                    )}
 
 
-                  <CButton size="sm" color="warning" onClick={() => history.push(`/users/${item.iduser}`)}>
-                    Edit
-                  </CButton>
-                  <CButton size="sm" color="danger" className="ml-1" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setUserid(item.iduser) }}>
-                    Delete
-                  </CButton>
-                </CCardBody>
-              </CCollapse>
-            )
-          }
-      }}
-    />
+                    <CButton size="sm" color="warning" onClick={() => history.push(`/users/${item.iduser}`)}>
+                      Edit
+                    </CButton>
+                    <CButton size="sm" color="danger" className="ml-1" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setUserid(item.iduser) }}>
+                      Delete
+                    </CButton>
+                  </CCardBody>
+                </CCollapse>
+              )
+            }
+        }}
+      />
+    </>
   )
 }
 

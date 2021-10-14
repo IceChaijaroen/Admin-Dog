@@ -18,7 +18,7 @@ import axios from 'axios'
 
 
 
-const Charts = () => {
+const Doginfo = () => {
   const [details, setDetails] = useState([])
   const [doginfo, setDoginfo] = useState([])
   const [submit, setSubmit] = useState(false)
@@ -85,7 +85,7 @@ const Charts = () => {
         <table height="30">
           <tr>
             <td text-align="center" >
-              <CButton color="success" onClick={() => history.push(`/users/insert`)}> เพิ่มข้อมูลผู้ใช้</CButton>
+              <CButton color="success" onClick={() => history.push(`/doginfo/insert`)}> เพิ่มข้อมูลสุนัข</CButton>
             </td>
           </tr>
         </table>
@@ -135,7 +135,7 @@ const Charts = () => {
                     )}
 
 
-                    <CButton size="sm" color="warning" onClick={() => history.push(`/charts/${item.iddoginfo}`)}>
+                    <CButton size="sm" color="warning" onClick={() => history.push(`/doginfo/${item.iddoginfo}`)}>
                       Edit
                     </CButton>
                     <CButton size="sm" color="danger" className="ml-1" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setiddoginfo(item.iddoginfo) }}>
@@ -151,4 +151,4 @@ const Charts = () => {
   )
 }
 
-export default Charts
+export default Doginfo

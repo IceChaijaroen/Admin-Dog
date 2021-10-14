@@ -38,7 +38,13 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'));
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
+const UserInsert = React.lazy(() => import('./views/users/UserInsert'));
+const Doginfo = React.lazy(() => import('./views/Doginfo/Doginfo'));
+const DoginfoEdit = React.lazy(() => import('./views/Doginfo/DoginfoEdit'));
+const DoginfoInsert = React.lazy(() => import('./views/Doginfo/DoginfoInsert'));
 const dogtrain = React.lazy(() => import('./views/dogtrain/dogtrain'));
+const doginsert = React.lazy(() => import('./views/dogtrain/doginsert'));
+const Dogstepinsert = React.lazy(() => import('./views/dogtrain/dogstepinsert'));
 const dogtrainDetail = React.lazy(() => import('./views/dogtrain/dogtrainDetail'));
 const Dogtraineditstep = React.lazy(() => import('./views/dogtrain/dogtraineditstep'));
 
@@ -83,9 +89,15 @@ const routes = [
   { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: '/users', exact: true, name: 'Users', component: Users },
+  { path: '/users/insert', name: 'Insert User', component: UserInsert },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/doginfo', exact: true, name: 'Doginfo', component: Doginfo },
+  { path: '/doginfo/insert', name: 'Insert Doginfo', component: DoginfoInsert },
+  { path: '/doginfo/:id', exact: true, name: 'Edit Doginfo', component: DoginfoEdit },
   { path: '/dogtrain', exact: true, name: 'Dogtrain', component: dogtrain },
+  { path: '/dogtrain/doginsert', name: 'Insert Dogtrain', component: doginsert },
   { path: '/dogtrain/:id', exact: true, name: 'Dogtrain Details', component: dogtrainDetail },
+  { path: '/dogtrain/:id/:id/:id', exact: true, name: 'Dogtrain insert', component: Dogstepinsert },
   { path: '/dogtrain/:id/:id', exact: true, name: 'Edit Step Dogtrain', component: Dogtraineditstep }
 ];
 

@@ -150,7 +150,7 @@ const _nav =  [
   {
     _tag: 'CSidebarNavItem',
     name: 'จัดการข้อมูลสายพันธุ์สุนัข',
-    to: '/charts',
+    to: '/doginfo',
     icon: 'cil-chart-pie'
   },
   {

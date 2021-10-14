@@ -6,47 +6,29 @@ import axios from 'axios'
 import { isTemplateElement } from '@babel/types'
 
 
-const Dogtraineditstep = ({ match }) => {
+const Dogstepinsert = ({ match }) => {
     const [usersData, setTrainStep] = useState([]);
     const [gif, setGif] = useState();
     const [descrip, setDescrip] = useState();
     const [step, setStep] = useState();
-    const [idtrain, setIdtrain] = useState();
 
     const history = useHistory()
 
-    useEffect(() => {
-        axios.get('http://35.187.253.40/admin/showedittrainstep.php', {
-            params: {
-                idgif: match.params.id
-            }
-        })
-            .then(res => {
-                setTrainStep(res.data.all);
-                setGif(res.data.gif);
-                setDescrip(res.data.descrip);
-                setStep(res.data.step);
-                setIdtrain(res.data.gifid);
-            })
-            .catch(err => {
-                alert(err)
-            })
-    }, [])
 
 
 
 
     function Submit() {
         const article = {
-            idgif: match.params.id,
+            idtrain: match.params.id,
             gif: gif,
             descrip: descrip,
             step: step,
         };
-        axios.post('http://35.187.253.40/admin/updatetrainstep.php', article)
+        axios.post('http://35.187.253.40/admin/inserttrainstep.php', article)
             .then(res => {
                 alert(res.data);
-                history.push(`/dogtrain/${idtrain}`)
+                history.push(`/dogtrain/${match.params.id}`)
             })
             .catch(err => {
                 alert(err);
@@ -77,9 +59,6 @@ const Dogtraineditstep = ({ match }) => {
     };
 
 
-    const user = usersData.find(user => user.idtrain === match.params.id)
-    const userDetails = user ? Object.entries(user) :
-        [['id', (<span><CIcon className="text-muted" name="cui-icon-ban" /> Not found</span>)]]
 
     return (
         <CRow>
@@ -94,7 +73,7 @@ const Dogtraineditstep = ({ match }) => {
                                 <tbody>
                                     <tr >
                                         <td width="200">
-                                            ขั้นตอนที่
+                                            ขั้นตอนที่ 
                                         </td>
                                         <td>
                                             <input size="8" type="text" value={step} onChange={(e) => setStep(e.target.value)} />
@@ -129,4 +108,4 @@ const Dogtraineditstep = ({ match }) => {
     )
 }
 
-export default Dogtraineditstep
+export default Dogstepinsert

@@ -12,6 +12,8 @@ const DogtrainDetail = ({ match }) => {
     const [trainlevel, setTrainlevel] = useState();
     const [trainimg, setTrainimg] = useState();
     const [traingif, setTraingif] = useState([]);
+    const [idgif, setIdgif] = useState();
+    const [submit, setSubmit] = useState(false);
     const history = useHistory()
 
     useEffect(() => {
@@ -38,7 +40,11 @@ const DogtrainDetail = ({ match }) => {
             }
         })
             .then(res => {
-                setTraingif(res.data);
+                if (res.data == null) {
+                    setTraingif([{ step: '', gif: '', descrip: '' }])
+                } else {
+                    setTraingif(res.data);
+                }
             })
             .catch(err => {
                 alert(err)
@@ -56,11 +62,30 @@ const DogtrainDetail = ({ match }) => {
         axios.post('http://35.187.253.40/admin/updatedogtrain.php', article)
             .then(res => {
                 alert(res.data);
+
             })
             .catch(err => {
                 alert(err);
             })
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get('http://35.187.253.40/admin/deletedogtrainstep.php', {
+                    params: {
+                        idgif: idgif
+                    }
+                })
+                setSubmit(false);
+                alert(res.data);
+            } catch (err) {
+                setSubmit(false);
+                alert(err);
+            }
+        }
+        if (submit) fetchData();
+    }, [submit])
 
 
 
@@ -86,9 +111,6 @@ const DogtrainDetail = ({ match }) => {
     };
 
 
-    const user = usersData.find(user => user.idtrain === match.params.id)
-    const userDetails = user ? Object.entries(user) :
-        [['id', (<span><CIcon className="text-muted" name="cui-icon-ban" /> Not found</span>)]]
 
     return (
         <CRow>
@@ -154,11 +176,20 @@ const DogtrainDetail = ({ match }) => {
                 <br />
                 <CCard>
                     <CCardHeader>
-                        <h4> แก้ไขขั้นตอนการฝึกท่า : {trainname} </h4>
+                        <table>
+                            <tr>
+                                <td width="90%">
+                                    <h4> แก้ไขขั้นตอนการฝึกท่า : {trainname} </h4>
+                                </td>
+                                <td width="7%">
+                                    <CButton color="info" onClick={() => { history.push(`/dogtrain/${match.params.id}/:id/${match.params.id}`) }}> เพิ่มท่าฝึกสุนัข</CButton>
+                                </td>
+                            </tr>
+                        </table>
                     </CCardHeader>
                     <CCardBody>
                         <form>
-                            <table className="table table-striped table-hover">
+                            <table width="100%" className="table table-striped table-hover">
                                 <tbody>
                                     <tr>
                                         <td width="2%">
@@ -168,7 +199,7 @@ const DogtrainDetail = ({ match }) => {
                                         <td width="15%">
                                             รูปภาพ
                                         </td>
-                                        <td width="30%">
+                                        <td width="20%">
                                             คำอธิบาย
                                         </td>
                                         <td width="2%">
@@ -179,29 +210,43 @@ const DogtrainDetail = ({ match }) => {
                                         </td>
                                     </tr>
                                     {traingif.map((item, key) => {
-                                        return (
-                                            <>
-                                                <tr>
-                                                    <td>
-                                                        {item.step}
-                                                    </td>
+                                        if (item.gif == '' && item.descrip == '' & item.step == '') {
+                                            return (
+                                                <>
+                                                    <tr>
+                                                        <td colSpan="5">
+                                                            <h4>ยังไม่มีข้อมูล</h4>
+                                                        </td>
+                                                    </tr>
 
-                                                    <td>
-                                                        <img src={item.gif} width="250" />
-                                                    </td>
-                                                    <td>
-                                                        {item.descrip}
-                                                    </td>
-                                                    <td>
-                                                        <CButton size="lr" color="warning" onClick={() => history.push(`/dogtrain/${match.params.id}/${item.idgif}`)}> แก้ไข </CButton>
-                                                    </td>
-                                                    <td>
-                                                        <CButton size="lr" color="danger"> ลบ </CButton>
-                                                    </td>
-                                                </tr>
+                                                </>
+                                            )
+                                        } else {
+                                            return (
+                                                <>
+                                                    <tr>
+                                                        <td>
+                                                            {item.step}
+                                                        </td>
 
-                                            </>
-                                        )
+                                                        <td>
+                                                            <img src={item.gif} width="250" />
+                                                        </td>
+                                                        <td width="20%">
+                                                            {item.descrip}
+                                                        </td>
+                                                        <td>
+                                                            <CButton size="lr" color="warning" onClick={() => history.push(`/dogtrain/${match.params.id}/${item.idgif}`)}> แก้ไข </CButton>
+                                                        </td>
+                                                        <td>
+                                                            <CButton size="lr" color="danger" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setIdgif(item.idgif); }}> ลบ </CButton>
+                                                        </td>
+                                                    </tr>
+
+                                                </>
+                                            )
+                                        }
+
                                     })}
 
                                 </tbody>

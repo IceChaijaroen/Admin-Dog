@@ -22,7 +22,7 @@ const Dogtrain = () => {
   const [details, setDetails] = useState([])
   const [dogtrain, setDogtrain] = useState([])
   const [submit, setSubmit] = useState(false)
-  const [iduser, setUserid] = useState()
+  const [idtrain, setIdtrain] = useState()
   const history = useHistory()
 
 
@@ -39,13 +39,15 @@ const Dogtrain = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://35.187.253.40/admin/delete.php', {
+        const res = await axios.get('http://35.187.253.40/admin/deletedogtrain.php', {
           params: {
-            iduser: iduser
+            idtrain: idtrain
           }
         })
+        setSubmit(false);
         alert(res.data);
       } catch (err) {
+        setSubmit(false);
         alert(err);
       }
     }
@@ -79,63 +81,74 @@ const Dogtrain = () => {
 
 
   return (
-    <CDataTable
-      items={dogtrain}
-      fields={fields}
-      columnFilter
-      tableFilter
-      footer
-      itemsPerPageSelect
-      itemsPerPage={5}
-      hover
-      sorter
-      pagination
-      scopedSlots={{
-        'show_details':
-          (item, index) => {
-            return (
-              <td className="py-2">
-                <CButton
-                  color="primary"
-                  variant="outline"
-                  shape="square"
-                  size="sm"
-                  onClick={() => { toggleDetails(index) }}
-                >
-                  {details.includes(index) ? 'ซ่อน' : 'จัดการข้อมูล'}
-                </CButton>
-              </td>
-            )
-          },
-        'details':
-          (item, index) => {
-            return (
-              <CCollapse show={details.includes(index)}>
-                <CCardBody>
-                  <h4>ชื่อท่าฝึก : {item.trainname}</h4>
-                  {item.trainimg == null || item.trainimg == "" ? (
-                    <>
-                      <h4>ยังไม่มีรูปภาพ</h4>
-                    </>
-                  ) : (
-                    <>
-                      <h4><img src={item.trainimg} width="120" height="120" /></h4>
-                    </>
-                  )}
+    <>
+      <CCol align="right" lg={12}>
+        <table height="30">
+          <tr>
+            <td text-align="center" >
+              <CButton color="success" onClick={() => history.push(`/dogtrain/doginsert`)}> เพิ่มท่าฝึกสุนัข</CButton>
+            </td>
+          </tr>
+        </table>
+      </CCol>
+      <CDataTable
+        items={dogtrain}
+        fields={fields}
+        columnFilter
+        tableFilter
+        footer
+        itemsPerPageSelect
+        itemsPerPage={5}
+        hover
+        sorter
+        pagination
+        scopedSlots={{
+          'show_details':
+            (item, index) => {
+              return (
+                <td className="py-2">
+                  <CButton
+                    color="primary"
+                    variant="outline"
+                    shape="square"
+                    size="sm"
+                    onClick={() => { toggleDetails(index) }}
+                  >
+                    {details.includes(index) ? 'ซ่อน' : 'จัดการข้อมูล'}
+                  </CButton>
+                </td>
+              )
+            },
+          'details':
+            (item, index) => {
+              return (
+                <CCollapse show={details.includes(index)}>
+                  <CCardBody>
+                    <h4>ชื่อท่าฝึก : {item.trainname}</h4>
+                    {item.trainimg == null || item.trainimg == "" ? (
+                      <>
+                        <h4>ยังไม่มีรูปภาพ</h4>
+                      </>
+                    ) : (
+                      <>
+                        <h4><img src={item.trainimg} width="120" height="120" /></h4>
+                      </>
+                    )}
 
 
-                  <CButton size="sm" color="warning" onClick={() => history.push(`/dogtrain/${item.idtrain}`)}>
-                    Edit
-                  </CButton>
-                  <CButton size="sm" color="danger" className="ml-1" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setUserid(item.iddoginfo) }}>
-                    Delete
-                  </CButton>
-                </CCardBody>
-              </CCollapse>
-            )
-          }
-      }}
-    />
+                    <CButton size="sm" color="warning" onClick={() => history.push(`/dogtrain/${item.idtrain}`)}>
+                      Edit
+                    </CButton>
+                    <CButton size="sm" color="danger" className="ml-1" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setIdtrain(item.idtrain) }}>
+                      Delete
+                    </CButton>
+                  </CCardBody>
+                </CCollapse>
+              )
+            }
+        }}
+      />
+    </>
   )
 }
 
