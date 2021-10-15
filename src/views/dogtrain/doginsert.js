@@ -38,7 +38,7 @@ const DogtrainDetail = ({ match }) => {
                 alert(err)
             })
     }, [])
-
+    
     function Submit() {
         const article = {
             trainname: trainname,

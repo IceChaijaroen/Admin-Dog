@@ -46,8 +46,10 @@ const Users = () => {
           }
         })
         alert(res.data);
+        setSubmit(false);
       } catch (err) {
         alert(err);
+        setSubmit(false);
       }
     }
     if (submit) fetchData();

@@ -95,175 +95,173 @@ const DoginfoInsert = ({ match }) => {
                         <h4> เพิ่มข้อมูลสุนัข </h4>
                     </CCardHeader>
                     <CCardBody>
-                        <form>
-                            <table className="table table-striped table-hover">
-                                <tbody>
-                                    <tr>
-                                        <td width="150">
-                                            dogname
-                                        </td>
-                                        <td>
-                                            <input size="78" type="text" value={dogname} onChange={(e) => setDogname(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            origin
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80"  type="text" value={origin} onChange={(e) => setOrigin(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            typeuse
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={typeuse} onChange={(e) => setTypeuse(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            habit
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={habit} onChange={(e) => setHabit(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            size
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={size} onChange={(e) => setSize(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="150">
-                                            ears
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={ears} onChange={(e) => setEars(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            body
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={body} onChange={(e) => setBody(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            tail
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={tail} onChange={(e) => setTail(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            wool
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={wool} onChange={(e) => setWool(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            woolcolor
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={woolcolor} onChange={(e) => setWoolcolor(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="150">
-                                            care
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={care} onChange={(e) => setCare(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            shower
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={shower} onChange={(e) => setShower(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            comb
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={comb} onChange={(e) => setComb(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            exercise
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={exercise} onChange={(e) => setExercise(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            caregiver
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={caregiver} onChange={(e) => setCaregiver(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="150">
-                                            type
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={type} onChange={(e) => setType(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            typewool
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={typewool} onChange={(e) => setTypewool(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            typeears
-                                        </td>
-                                        <td>
-                                            <textarea rows="10" cols="80" type="text" value={typeears} onChange={(e) => setTypeears(e.target.value)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            imgcut
-                                        </td>
-                                        <td>
-                                            <img src={imgcut} width="500" />
-                                            <input type="file" onChange={(e) => uploadImage(e)} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center" colSpan="2">
-                                            <CButton color="warning" onClick={() => history.push(`/doginfo`)}> ย้อนกลับ </CButton>
-                                            &nbsp;&nbsp;&nbsp;
-                                            <CButton color="success" onClick={(e) => Submit(e)}> ยืนยัน </CButton>
+                        <table className="table table-striped table-hover">
+                            <tbody>
+                                <tr>
+                                    <td width="150">
+                                        dogname
+                                    </td>
+                                    <td>
+                                        <input size="78" type="text" value={dogname} onChange={(e) => setDogname(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        origin
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={origin} onChange={(e) => setOrigin(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        typeuse
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={typeuse} onChange={(e) => setTypeuse(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        habit
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={habit} onChange={(e) => setHabit(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        size
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={size} onChange={(e) => setSize(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="150">
+                                        ears
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={ears} onChange={(e) => setEars(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        body
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={body} onChange={(e) => setBody(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        tail
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={tail} onChange={(e) => setTail(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        wool
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={wool} onChange={(e) => setWool(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        woolcolor
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={woolcolor} onChange={(e) => setWoolcolor(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="150">
+                                        care
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={care} onChange={(e) => setCare(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        shower
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={shower} onChange={(e) => setShower(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        comb
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={comb} onChange={(e) => setComb(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        exercise
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={exercise} onChange={(e) => setExercise(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        caregiver
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={caregiver} onChange={(e) => setCaregiver(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="150">
+                                        type
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={type} onChange={(e) => setType(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        typewool
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={typewool} onChange={(e) => setTypewool(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        typeears
+                                    </td>
+                                    <td>
+                                        <textarea rows="10" cols="80" type="text" value={typeears} onChange={(e) => setTypeears(e.target.value)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        imgcut
+                                    </td>
+                                    <td>
+                                        <img src={imgcut} width="500" />
+                                        <input type="file" onChange={(e) => uploadImage(e)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" colSpan="2">
+                                        <CButton color="warning" onClick={() => history.push(`/doginfo`)}> ย้อนกลับ </CButton>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <CButton color="success" onClick={(e) => Submit(e)}> ยืนยัน </CButton>
 
-                                        </td>
+                                    </td>
 
-                                    </tr>
-                                </tbody>
+                                </tr>
+                            </tbody>
 
-                            </table>
-                        </form>
+                        </table>
                     </CCardBody>
                 </CCard>
             </CCol>

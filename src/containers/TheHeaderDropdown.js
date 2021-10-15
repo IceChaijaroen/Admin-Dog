@@ -1,90 +1,118 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CBadge,
   CDropdown,
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
-  CImg
+  CImg,
+  CButton
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import axios from 'axios'
+import { reactLocalStorage } from 'reactjs-localstorage';
+import { useHistory, useLocation } from 'react-router-dom'
 
-const TheHeaderDropdown = () => {
+const TheHeaderDropdown = (match) => {
+  const [adminID, setAdminID] = useState()
+  const [admindata, setAdmindata] = useState([])
+  const history = useHistory()
+
+
+  const id = reactLocalStorage.get('adminid');
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const res = await axios.get('http://35.187.253.40/admin/admindata.php', {
+          params: {
+            adminID: id
+          }
+        })
+        setAdmindata(res.data)
+      } catch (err) {
+        alert(err)
+      }
+    }
+    fetchdata();
+  }, [admindata])
+
+  console.log(id)
+
   return (
     <CDropdown
       inNav
       className="c-header-nav-items mx-2"
       direction="down"
     >
-      <CDropdownToggle className="c-header-nav-link" caret={false}>
-        <div className="c-avatar">
-          <CImg
-            src={'avatars/6.jpg'}
-            className="c-avatar-img"
-            alt="admin@bootstrapmaster.com"
-          />
-        </div>
-      </CDropdownToggle>
-      <CDropdownMenu className="pt-0" placement="bottom-end">
-        <CDropdownItem
-          header
-          tag="div"
-          color="light"
-          className="text-center"
-        >
-          <strong>Account</strong>
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-bell" className="mfe-2" />
-          Updates
-          <CBadge color="info" className="mfs-auto">42</CBadge>
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-envelope-open" className="mfe-2" />
-          Messages
-          <CBadge color="success" className="mfs-auto">42</CBadge>
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-task" className="mfe-2" />
-          Tasks
-          <CBadge color="danger" className="mfs-auto">42</CBadge>
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-comment-square" className="mfe-2" />
-          Comments
-          <CBadge color="warning" className="mfs-auto">42</CBadge>
-        </CDropdownItem>
-        <CDropdownItem
-          header
-          tag="div"
-          color="light"
-          className="text-center"
-        >
-          <strong>Settings</strong>
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-user" className="mfe-2" />Profile
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-settings" className="mfe-2" />
-          Settings
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-credit-card" className="mfe-2" />
-          Payments
-          <CBadge color="secondary" className="mfs-auto">42</CBadge>
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-file" className="mfe-2" />
-          Projects
-          <CBadge color="primary" className="mfs-auto">42</CBadge>
-        </CDropdownItem>
-        <CDropdownItem divider />
-        <CDropdownItem>
-          <CIcon name="cil-lock-locked" className="mfe-2" />
-          Lock Account
-        </CDropdownItem>
-      </CDropdownMenu>
+      {admindata == null ? (
+        <>
+          <CDropdownToggle className="c-header-nav-link" caret={false}>
+            <div className="c-avatar">
+              <CButton color="info" className="px-4" onClick={() => { history.push(`/login`); }}>Login</CButton>
+            </div>
+          </CDropdownToggle>
+
+        </>
+      ) : (
+        <>
+          {admindata.map((item, index) => (
+            <>
+              <CDropdownToggle className="c-header-nav-link" caret={false}>
+                <div className="c-avatar">
+                  <CImg
+                    src={item.img}
+                    className="c-avatar-img"
+                    alt="admin@bootstrapmaster.com"
+                  />
+                </div>
+              </CDropdownToggle>
+              <CDropdownMenu className="pt-0" placement="bottom-end">
+                <CDropdownItem
+                  header
+                  tag="div"
+                  color="light"
+                  className="text-center"
+                >
+                  <strong>Account</strong>
+                </CDropdownItem>
+                <CDropdownItem>
+                  <table height="100">
+                    <tr>
+                      <td>
+                        <CImg
+                          src={item.img}
+                          className="c-avatar-img"
+                          alt="admin@bootstrapmaster.com"
+                        />
+                      </td>
+                    </tr>
+                    <br />
+                    <tr>
+                      <td align="center">
+                        <h4>{item.username}</h4>
+                      </td>
+                    </tr>
+                  </table>
+                </CDropdownItem>
+                <CDropdownItem>
+                  <table width="100%" height="10">
+                    <tr >
+                      <td align="center">
+                        <CButton color="danger" className="px-4" onClick={() => { history.push(`/login`); reactLocalStorage.set('adminid', null); }}>Logout</CButton>
+                      </td>
+                    </tr>
+                  </table>
+                </CDropdownItem>
+
+              </CDropdownMenu>
+            </>
+          ))}
+        </>
+      )}
+
+
+
     </CDropdown>
   )
 }

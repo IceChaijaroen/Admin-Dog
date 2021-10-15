@@ -7,7 +7,8 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 const User = ({ match }) => {
   const [usersData, setUserinfo] = useState([]);
-  const [iduser, setIduser] = useState([]);
+  const [udogid, setUdogid] = useState();
+  const [userdog, setUserdog] = useState([]);
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -57,7 +58,20 @@ const User = ({ match }) => {
       })
   }
 
-  console.log(iduser, username, email, password, name, lastname)
+  useEffect(() => {
+    axios.get('http://35.187.253.40/admin/userdog.php', {
+      params: {
+        iduser: match.params.id
+      }
+    })
+      .then(res => {
+        setUserdog(res.data);
+      })
+      .catch(err => {
+        alert(err)
+      })
+  }, [userdog])
+
 
 
   const uploadImage = async (e) => {
@@ -89,74 +103,170 @@ const User = ({ match }) => {
 
   return (
     <CRow>
-      <CCol lg={6}>
+      <CCol lg={12}>
         <CCard>
           <CCardHeader>
-            User id: {match.params.id}
+            <h4> ข้อมูลการฝึก </h4>
           </CCardHeader>
           <CCardBody>
-            <form >
+            <form>
               <table className="table table-striped table-hover">
-
                 <tbody>
-                  {
-                    userDetails.map(([key, value], index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{`${key}:`}</td>
-                          {(() => {
-                            if (key == 'img') {
-                              return (
-                                <>
-                                  <td>
-                                    <img src={img} width="500" />
-                                    <input type="file" onChange={(e) => uploadImage(e)} />
-                                  </td>
-                                </>
-                              )
-                            } else if (key == 'username') {
-                              return (
-                                <td><input type="text" value={username} onChange={e => setUsername(e.target.value)} /></td>
-                              )
-                            } else if (key == 'email') {
-                              return (
-                                <td><input type="text" value={email} onChange={e => setEmail(e.target.value)} /></td>
-                              )
-                            } else if (key == 'password') {
-                              return (
-                                <td><input type="text" value={password} onChange={e => setPassword(e.target.value)} /></td>
-                              )
-                            } else if (key == 'name') {
-                              return (
-                                <td><input type="text" value={name} onChange={e => setName(e.target.value)} /></td>
-                              )
-                            } else if (key == 'lastname') {
-                              return (
-                                <td><input type="text" value={lastname} onChange={e => setLastname(e.target.value)} /></td>
-                              )
-                            } else {
-                              return (
-                                <td><input type="text" value={value} disabled={true} /></td>
-                              )
-                            }
-                          })()}
-                        </tr>
-                      )
-                    })
-                  }
+                  <tr >
+                    <td width="150">
+                      Userid
+                    </td>
+                    <td>
+                      <input type="text" size="5" value={match.params.id} disabled={true} />
+                    </td>
+                  </tr>
+                  <tr >
+                    <td width="150">
+                      Username
+                    </td>
+                    <td>
+                      <input type="text" size="50" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    </td>
+                  </tr>
+                  <tr >
+                    <td width="150">
+                      Email
+                    </td>
+                    <td>
+                      <input type="text" size="50" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    </td>
+                  </tr>
+
                   <tr>
-                    <td align="center" colSpan="2">
-                    <CButton color="warning" onClick={() => history.push(`/users`)}> ย้อนกลับ </CButton>
+                    <td>
+                      Password
+                    </td>
+                    <td>
+                      <input type="text" size="50" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      name
+                    </td>
+                    <td>
+                      <input type="text" size="50" value={name} onChange={(e) => setName(e.target.value)} />
+                    </td>
+                  </tr>
+                  <tr >
+                    <td width="150">
+                      lastname
+                    </td>
+                    <td>
+                      <input type="text" size="50" value={lastname} onChange={(e) => setLastname(e.target.value)} />
+                    </td>
+                  </tr>
+                  <tr >
+                    <td width="150">
+                      รูปภาพ
+                    </td>
+                    <td>
+                      <img src={img} width="500" />
+                      <br />
+                      <input type="file" onChange={(e) => uploadImage(e)} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan="2" align="center">
+                      <CButton color="warning" onClick={() => history.push(`/users/`)}> ย้อนกลับ </CButton>
                       &nbsp;&nbsp;&nbsp;
                       <CButton color="success" onClick={(e) => Submit(e)}> ยืนยัน </CButton>
-
                     </td>
-
                   </tr>
                 </tbody>
+
               </table>
             </form>
           </CCardBody>
+        </CCard>
+        <br />
+        <br />
+        <CCard>
+          <CCardHeader>
+            <table>
+              <tr>
+                <td width="90%">
+                  <h4> จัดการข้อมูลสุนัข User : {name}  </h4>
+                </td>
+                <td width="7%">
+                  <CButton color="info" onClick={() => { history.push(`/dogtrain/${match.params.id}/:id/${match.params.id}`) }}> เพิ่มท่าฝึกสุนัข</CButton>
+                </td>
+              </tr>
+            </table>
+          </CCardHeader>
+          <CCardBody>
+            <form>
+              <table width="100%" className="table table-striped table-hover">
+                <tbody>
+                  <tr>
+                    <td width="2%">
+                      ขั้นตอนที่
+                    </td>
+
+                    <td width="15%">
+                      รูปภาพ
+                    </td>
+                    <td width="20%">
+                      คำอธิบาย
+                    </td>
+                    <td width="2%">
+                      แก้ไข
+                    </td>
+                    <td width="2%">
+                      ลบ
+                    </td>
+                  </tr>
+                  {userdog == null ? (
+                    <>
+                      <tr>
+                        <td colSpan="5" width="2%">
+                          ไม่มีข้อมูลสุนัข
+                        </td>
+
+                      </tr>
+                    </>
+                  ) : (
+                    <>
+
+                    </>
+                  )}
+                  {userdog.map((item, key) => {
+                    return (
+                      <>
+                        <tr>
+                          <td>
+                            {item.udogname}
+                          </td>
+
+                          <td>
+                            <img src={item.udogimg} width="250" />
+                          </td>
+                          <td width="20%">
+                            {item.udogbreed}
+                          </td>
+                          <td>
+                            <CButton size="lr" color="warning" onClick={() => history.push(`/users/${match.params.id}/${item.udogid}`)}> แก้ไข </CButton>
+                          </td>
+                          <td>
+                            <CButton size="lr" color="danger" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setUdogid(item.idgif); }}> ลบ </CButton>
+                          </td>
+                        </tr>
+
+                      </>
+                    )
+                  })}
+
+                </tbody>
+                <button > ยืนยัน </button>
+              </table>
+            </form>
+          </CCardBody>
+
         </CCard>
       </CCol>
     </CRow>

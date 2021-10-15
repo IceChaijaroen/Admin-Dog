@@ -24,14 +24,12 @@ const TheSidebar = () => {
   return (
     <CSidebar
       show={show}
-      style={{backgroundColor:'#3D3D3D'}}
+      style={{ backgroundColor: '#3D3D3D' }}
       onShowChange={(val) => dispatch({ type: 'set', sidebarShow: val })
-    }
+      }
     >
-      <CSidebarBrand style={{backgroundColor:'#292B2D'}}>
-        <img src={'img/Since1992.png'} style={{ width: 50, height: 50 }} />
-
-        <th>ADMIN</th>
+      <CSidebarBrand style={{ backgroundColor: '#292B2D' }}>
+        <th>Dog training</th>
       </CSidebarBrand>
       <CSidebarNav>
 

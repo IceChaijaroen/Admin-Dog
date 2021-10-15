@@ -31,6 +31,7 @@ const DoginfoEdit = ({ match }) => {
     const [path, setPath] = useState();
     const [dogimage, setDogimage] = useState([]);
     const [submit, setSubmit] = useState(false)
+    const [idimg, setIdimg] = useState(false)
     const history = useHistory()
 
 
@@ -84,6 +85,23 @@ const DoginfoEdit = ({ match }) => {
             })
     }, [dogimage])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            await axios.get('http://35.187.253.40/admin/deleteslidedog.php', {
+                params: {
+                    idimg: idimg
+                }
+            })
+                .then(res => {
+                    alert(res.data);
+                })
+                .catch(err => {
+                    alert(err);
+                })
+        }
+        if (submit) fetchData();
+    }, [submit])
+
 
     function Submit() {
         const article = {
@@ -123,7 +141,7 @@ const DoginfoEdit = ({ match }) => {
     const uploadImage = async (e) => {
         const file = e.target.files[0];
         const base64 = await convertBase64(file);
-        setImg(base64);
+        setImgcut(base64);
     };
 
     const uploadImagecut = async (e) => {
@@ -341,7 +359,16 @@ const DoginfoEdit = ({ match }) => {
             <CCol lg={12}>
                 <CCard>
                     <CCardHeader>
-                        <h4> แก้ไขรูปสไลด์ </h4>
+                        <table>
+                            <tr>
+                                <td width="90%">
+                                    <h4> แก้ไขรูปสไลด์โชว์ : {dogname} </h4>
+                                </td>
+                                <td width="7%">
+                                    <CButton color="info" onClick={() => { history.push(`/doginfo/${match.params.id}/:id/${match.params.id}`) }}> เพิ่มท่าฝึกสุนัข</CButton>
+                                </td>
+                            </tr>
+                        </table>
                     </CCardHeader>
                     <CCardBody>
                         <form>
@@ -380,12 +407,12 @@ const DoginfoEdit = ({ match }) => {
                                                         <img src={item.path} width="250" />
                                                     </td>
                                                     <td>
-                                                        <CButton size="sm" color="warning" onClick={() => history.push(`/doginfo/${item.iddoginfo}`)}>
+                                                        <CButton size="sm" color="warning" onClick={() => history.push(`/doginfo/${match.params.id}/${item.idimg}`)}>
                                                             Edit
                                                         </CButton>
                                                     </td>
                                                     <td>
-                                                        <CButton size="sm" color="danger" className="ml-1" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true);  }}>
+                                                        <CButton size="sm" color="danger" className="ml-1" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setIdimg(item.idimg) }}>
                                                             Delete
                                                         </CButton>
                                                     </td>

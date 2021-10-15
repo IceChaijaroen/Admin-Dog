@@ -14,18 +14,18 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavTitle',
-    _children: ['Theme']
+    _children: ['ข้อมูลผู้ใช้']
   },
   
   {
     _tag: 'CSidebarNavItem',
-    name: 'ข้อมูลผู้ใช้งาน',
-    to: '/theme/typography',
-    icon: 'cil-pencil',
+    name: 'จัดการข้อมูลผู้ใช้งาน',
+    to: '/users',
+    icon: 'cil-user',
   },
   {
     _tag: 'CSidebarNavTitle',
-    _children: ['Components']
+    _children: ['ข้อมูลสุนัข']
   },
   /*
   {
@@ -151,13 +151,13 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'จัดการข้อมูลสายพันธุ์สุนัข',
     to: '/doginfo',
-    icon: 'cil-chart-pie'
+    icon: 'cil-list-rich'
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'จัดการท่าฝึกสุนัข',
     to: '/dogtrain',
-    icon: 'cil-chart-pie'
+    icon: 'cil-list-rich'
   },
   /*
   {
