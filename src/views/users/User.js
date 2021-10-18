@@ -59,6 +59,24 @@ const User = ({ match }) => {
   }
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get('http://35.187.253.40/admin/deleteusergog.php', {
+          params: {
+            udogid: udogid
+          }
+        })
+        setSubmit(false);
+        alert(res.data);
+      } catch (err) {
+        setSubmit(false);
+        alert(err);
+      }
+    }
+    if (submit) fetchData();
+  }, [submit])
+
+  useEffect(() => {
     axios.get('http://35.187.253.40/admin/userdog.php', {
       params: {
         iduser: match.params.id
@@ -194,7 +212,7 @@ const User = ({ match }) => {
                   <h4> จัดการข้อมูลสุนัข User : {name}  </h4>
                 </td>
                 <td width="7%">
-                  <CButton color="info" onClick={() => { history.push(`/dogtrain/${match.params.id}/:id/${match.params.id}`) }}> เพิ่มท่าฝึกสุนัข</CButton>
+                  <CButton color="info" onClick={() => { history.push(`/users/${match.params.id}/:id/${match.params.id}`) }}> เพิ่มท่าฝึกสุนัข</CButton>
                 </td>
               </tr>
             </table>
@@ -205,10 +223,12 @@ const User = ({ match }) => {
                 <tbody>
                   <tr>
                     <td width="2%">
-                      ขั้นตอนที่
+                      ลำดับที่
                     </td>
-
-                    <td width="15%">
+                    <td width="5%">
+                      ชื่อสุนัข
+                    </td>
+                    <td width="10%">
                       รูปภาพ
                     </td>
                     <td width="20%">
@@ -225,44 +245,44 @@ const User = ({ match }) => {
                     <>
                       <tr>
                         <td colSpan="5" width="2%">
-                          ไม่มีข้อมูลสุนัข
+                          <h4>ไม่มีข้อมูลสุนัข</h4>
                         </td>
 
                       </tr>
                     </>
                   ) : (
                     <>
+                      {userdog.map((item, key) => {
+                        return (
+                          <>
+                            <tr>
+                              <td>
+                                {key + 1}
+                              </td>
+                              <td>
+                                {item.udogname}
+                              </td>
+                              <td>
+                                <img src={item.udogimg} width="250" />
+                              </td>
+                              <td width="20%">
+                                {item.udogbreed}
+                              </td>
+                              <td>
+                                <CButton size="lr" color="warning" onClick={() => history.push(`/users/${match.params.id}/${item.udogid}`)}> แก้ไข </CButton>
+                              </td>
+                              <td>
+                                <CButton size="lr" color="danger" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setUdogid(item.udogid); }}> ลบ </CButton>
+                              </td>
+                            </tr>
 
+                          </>
+                        )
+                      })}
                     </>
                   )}
-                  {userdog.map((item, key) => {
-                    return (
-                      <>
-                        <tr>
-                          <td>
-                            {item.udogname}
-                          </td>
-
-                          <td>
-                            <img src={item.udogimg} width="250" />
-                          </td>
-                          <td width="20%">
-                            {item.udogbreed}
-                          </td>
-                          <td>
-                            <CButton size="lr" color="warning" onClick={() => history.push(`/users/${match.params.id}/${item.udogid}`)}> แก้ไข </CButton>
-                          </td>
-                          <td>
-                            <CButton size="lr" color="danger" onClick={() => { if (window.confirm('ยืนยันการลบข้อมูล')) setSubmit(true); setUdogid(item.idgif); }}> ลบ </CButton>
-                          </td>
-                        </tr>
-
-                      </>
-                    )
-                  })}
-
                 </tbody>
-                <button > ยืนยัน </button>
+
               </table>
             </form>
           </CCardBody>
